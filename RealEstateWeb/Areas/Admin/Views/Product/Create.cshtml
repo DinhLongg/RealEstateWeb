@@ -1,0 +1,66 @@
+﻿@model RealEstateWeb.Models.Property
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Thêm sản phẩm";
+}
+
+<h3>Thêm sản phẩm</h3>
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label class="form-label">Tiêu đề</label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Giá</label>
+            <input asp-for="Price" class="form-control" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Địa chỉ</label>
+            <input asp-for="Address" class="form-control" />
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Loại</label>
+            <input asp-for="Type" class="form-control" />
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Trạng thái (For Sale / For Rent)</label>
+            <input asp-for="Status" class="form-control" />
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Kích thước (m²)</label>
+            <input asp-for="Size" class="form-control" />
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Phòng ngủ</label>
+            <input asp-for="Bed" class="form-control" />
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Phòng tắm</label>
+            <input asp-for="Bath" class="form-control" />
+        </div>
+
+        <div class="col-md-12">
+            <label class="form-label">Mô tả</label>
+            <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Ảnh (Upload)</label>
+            <input type="file" name="ImageFile" class="form-control" />
+            <div class="form-text">Nếu không upload, sẽ dùng placeholder.</div>
+        </div>
+
+        <div class="col-12">
+            <button class="btn btn-primary">Lưu</button>
+            <a asp-action="Index" class="btn btn-outline-secondary ms-2">Hủy</a>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

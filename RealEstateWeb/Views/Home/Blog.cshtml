@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Blog";
+}
+
+<h1>Tin tức / Blog</h1>
+<p>Đây là trang blog, danh sách bài viết.</p>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card mb-3">
+            <img src="/images/blog1.jpg" class="card-img-top" alt="Blog 1">
+            <div class="card-body">
+                <h5 class="card-title">Bài blog 1</h5>
+                <p class="card-text">Tóm tắt ngắn…</p>
+                <a asp-controller="Home" asp-action="BlogDetail" asp-route-id="1" class="btn btn-primary">Đọc tiếp</a>
+            </div>
+        </div>
+    </div>
+    @* thêm các bài blog khác tương tự *@
+</div>

@@ -1,0 +1,17 @@
+﻿@model RealEstateWeb.Models.ApplicationUser
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Xóa nhân viên";
+}
+
+<h4>Xác nhận xóa</h4>
+<div class="card p-3">
+    <p>Username: <strong>@Model.UserName</strong></p>
+    <p>Email: <strong>@Model.Email</strong></p>
+    <form asp-action="Delete" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="id" value="@Model.Id" />
+        <button class="btn btn-danger">Xóa</button>
+        <a asp-action="Index" class="btn btn-outline-secondary ms-2">Hủy</a>
+    </form>
+</div>

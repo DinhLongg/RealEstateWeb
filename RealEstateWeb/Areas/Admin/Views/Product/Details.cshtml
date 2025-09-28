@@ -1,0 +1,25 @@
+﻿@model RealEstateWeb.Models.Property
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Chi tiết sản phẩm";
+}
+
+<div class="row">
+    <div class="col-md-5">
+        <img src="@Url.Content(Model.ImageUrl ?? "~/img/placeholder.png")" class="img-fluid rounded" />
+    </div>
+    <div class="col-md-7">
+        <h3>@Model.Title</h3>
+        <div class="text-muted">@Model.Type • @Model.Status</div>
+        <h4 class="text-primary mt-3">@Model.Price.ToString("N0")</h4>
+        <p class="mt-3">@Model.Description</p>
+        <p><strong>Địa chỉ</strong>: @Model.Address</p>
+        <p><strong>Diện tích</strong>: @Model.Size m² • <strong>Phòng ngủ</strong>: @Model.Bed • <strong>Phòng tắm</strong>: @Model.Bath</p>
+
+        <div class="mt-4">
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Sửa</a>
+            <a asp-action="Index" class="btn btn-outline-secondary">Quay lại</a>
+        </div>
+    </div>
+</div>
+

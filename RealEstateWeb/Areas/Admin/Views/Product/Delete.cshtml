@@ -1,0 +1,18 @@
+﻿@model RealEstateWeb.Models.Property
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Xóa sản phẩm";
+}
+
+<h3>Xác nhận xóa</h3>
+<div class="card p-4">
+    <h5>@Model.Title</h5>
+    <p class="text-muted">@Model.Address</p>
+    <p><strong>Giá:</strong> @Model.Price.ToString("N0")</p>
+    <form asp-action="Delete" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">Xóa vĩnh viễn</button>
+        <a asp-action="Index" class="btn btn-outline-secondary ms-2">Hủy</a>
+    </form>
+</div>

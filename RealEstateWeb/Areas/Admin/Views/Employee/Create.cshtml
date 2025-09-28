@@ -1,0 +1,33 @@
+﻿@using RealEstateWeb.Models.ViewModels.Admin
+@model EmployeeCreateViewModel
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Tạo nhân viên";
+}
+
+<h4>Tạo nhân viên</h4>
+<form asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
+    <div class="row g-3">
+        <div class="col-md-4">
+            <label class="form-label">Username</label>
+            <input asp-for="UserName" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Email</label>
+            <input asp-for="Email" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Mật khẩu</label>
+            <input asp-for="Password" type="password" class="form-control" />
+        </div>
+        <div class="col-md-12">
+            <label class="form-label">Họ và tên</label>
+            <input asp-for="FullName" class="form-control" />
+        </div>
+        <div class="col-12">
+            <button class="btn btn-primary">Tạo</button>
+            <a asp-action="Index" class="btn btn-outline-secondary ms-2">Hủy</a>
+        </div>
+    </div>
+</form>

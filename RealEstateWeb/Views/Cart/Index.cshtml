@@ -1,0 +1,9 @@
+﻿@* Trang giỏ hàng *@
+<h1>Giỏ hàng</h1>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-info">@TempData["Message"]</div>
+}
+
+<p>Hiển thị các bất động sản trong giỏ ở đây.</p>

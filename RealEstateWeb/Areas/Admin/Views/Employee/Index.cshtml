@@ -1,0 +1,31 @@
+﻿@using RealEstateWeb.Models.ViewModels.Admin
+@model IEnumerable<UserRolesViewModel>
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Quản lý nhân viên";
+}
+
+<div class="d-flex justify-content-between mb-3">
+    <h3>Danh sách nhân viên</h3>
+    <a asp-action="Create" class="btn btn-primary btn-sm">Thêm nhân viên</a>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr><th>Username</th><th>Email</th><th>Roles</th><th></th></tr>
+    </thead>
+    <tbody>
+        @foreach (var u in Model)
+        {
+            <tr>
+                <td>@u.UserName</td>
+                <td>@u.Email</td>
+                <td>@string.Join(", ", u.Roles)</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@u.UserId" class="btn btn-sm btn-warning">Sửa</a>
+                    <a asp-action="Delete" asp-route-id="@u.UserId" class="btn btn-sm btn-danger">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

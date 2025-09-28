@@ -1,0 +1,71 @@
+﻿@model IEnumerable<RealEstateWeb.Models.Property>
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Quản lý sản phẩm";
+    int page = ViewBag.Page ?? 1;
+    int pageSize = ViewBag.PageSize ?? 10;
+    int total = ViewBag.Total ?? 0;
+    string q = ViewBag.Query ?? "";
+    int totalPages = (int)Math.Ceiling(total / (double)pageSize);
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+        <h3 class="mb-0">Danh sách sản phẩm</h3>
+        <small class="text-muted">Tổng: @total</small>
+    </div>
+    <div class="d-flex">
+        <form class="d-flex me-2" method="get">
+            <input name="q" value="@q" class="form-control form-control-sm" placeholder="Tìm theo tên/địa chỉ..." />
+            <button class="btn btn-sm btn-outline-primary ms-2" type="submit"><i class="fa fa-search"></i></button>
+        </form>
+        <a asp-action="Create" class="btn btn-primary btn-sm">Thêm sản phẩm</a>
+    </div>
+</div>
+
+<table class="table table-hover align-middle">
+    <thead>
+        <tr>
+            <th style="width:90px">Ảnh</th>
+            <th>Tiêu đề</th>
+            <th style="width:160px">Giá</th>
+            <th>Địa chỉ</th>
+            <th style="width:180px">Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img src="@Url.Content(item.ImageUrl ?? "~/img/placeholder.png")" style="width:80px;height:60px;object-fit:cover;border-radius:6px" />
+                </td>
+                <td>@item.Title <div class="small text-muted">@item.Type — @item.Status</div></td>
+                <td class="text-primary fw-bold">@item.Price.ToString("N0")</td>
+                <td class="text-muted">@item.Address</td>
+                <td class="table-actions">
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary"><i class="fa fa-eye"></i></a>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<nav>
+    <ul class="pagination justify-content-center">
+        <li class="page-item @(page == 1 ? "disabled" : "")">
+            <a class="page-link" asp-action="Index" asp-route-page="@(page - 1)" asp-route-q="@q">Trước</a>
+        </li>
+        @for (int i = 1; i <= totalPages; i++)
+        {
+            <li class="page-item @(i == page ? "active" : "")">
+                <a class="page-link" asp-action="Index" asp-route-page="@i" asp-route-q="@q">@i</a>
+            </li>
+        }
+        <li class="page-item @(page == totalPages ? "disabled" : "")">
+            <a class="page-link" asp-action="Index" asp-route-page="@(page + 1)" asp-route-q="@q">Tiếp</a>
+        </li>
+    </ul>
+</nav>

@@ -1,0 +1,131 @@
+﻿@model IEnumerable<RealEstateWeb.Models.Property>
+
+@{
+    ViewData["Title"] = "Danh sách Bất động sản";
+    int currentPage = ViewBag.CurrentPage ?? 1;
+    int totalPages = ViewBag.TotalPages ?? 1;
+    string name = ViewBag.Name ?? "";
+    string location = ViewBag.Location ?? "";
+    string sort = ViewBag.Sort ?? "";
+}
+
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="mb-3">Bất động sản</h1>
+        <p class="text-muted">Danh sách lấy từ cơ sở dữ liệu</p>
+    </div>
+
+    <!-- Nút điều hướng -->
+    <div class="d-flex justify-content-center mb-4">
+        <a asp-controller="Property" asp-action="Index" class="btn btn-primary mx-2">Featured</a>
+        <a asp-controller="Property" asp-action="Sale" class="btn btn-outline-primary mx-2">For Sale</a>
+        <a asp-controller="Property" asp-action="Rent" class="btn btn-outline-primary mx-2">For Rent</a>
+    </div>
+
+    <!-- 🔹THÊM MỚI: Thanh tìm kiếm đẹp -->
+    <form method="get" class="row g-2 mb-4 p-3 bg-light rounded shadow-sm">
+        <div class="col-md-4">
+            <div class="input-group">
+                <span class="input-group-text">🔎</span>
+                <input type="text" name="name" value="@name" class="form-control" placeholder="Tìm theo tên..." />
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="input-group">
+                <span class="input-group-text">📍</span>
+                <input type="text" name="location" value="@location" class="form-control" placeholder="Tìm theo địa điểm..." />
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="input-group">
+                <span class="input-group-text">💰</span>
+                <select name="sort" class="form-select">
+                    <option value="">Sắp xếp mặc định</option>
+                    <option value="price_asc" selected="@(sort == "price_asc")">Giá tăng dần</option>
+                    <option value="price_desc" selected="@(sort == "price_desc")">Giá giảm dần</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-1 d-grid">
+            <button type="submit" class="btn btn-primary">Lọc</button>
+        </div>
+    </form>
+
+    <!-- Danh sách bất động sản -->
+    <div class="row g-4">
+        @if (!Model?.Any() ?? true)
+        {
+            <div class="col-12">
+                <div class="alert alert-info text-center">
+                    Hiện chưa có bất động sản. Vui lòng thêm dữ liệu mẫu.
+                </div>
+            </div>
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="card h-100 shadow-sm">
+                        <img src="@Url.Content(item.ImageUrl ?? "~/img/placeholder.png")"
+                             class="card-img-top"
+                             style="height:200px;object-fit:cover"
+                             alt="@item.Title"
+                             onerror="this.src='@Url.Content("~/img/placeholder.png")'" />
+
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title mb-1">@item.Title</h5>
+                            <p class="text-muted small mb-2">@item.Address</p>
+
+                            <div class="mb-2">
+                                <span class="fw-bold text-primary">@item.Price.ToString("N0") ₫</span>
+                            </div>
+
+                            <p class="card-text text-muted small text-truncate" style="max-height:3.6rem;">
+                                @item.Description
+                            </p>
+
+                            <div class="mt-auto d-flex justify-content-between align-items-center pt-3">
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-primary">
+                                    Xem chi tiết
+                                </a>
+
+                                <form asp-controller="Cart" asp-action="Add" method="post" class="m-0">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="propertyId" value="@item.Id" />
+                                    <button type="submit" class="btn btn-sm btn-outline-success">
+                                        <i class="fa fa-shopping-cart me-1"></i>Thêm vào giỏ
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-transparent">
+                            <small class="text-muted">ID: @item.Id</small>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
+    <!-- 🔹SỬA: Phân trang giữ lại các tham số lọc -->
+    @if (totalPages > 1)
+    {
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center mt-4">
+                @for (int i = 1; i <= totalPages; i++)
+                {
+                    <li class="page-item @(i == currentPage ? "active" : "")">
+                        <a class="page-link"
+                           asp-action="Index"
+                           asp-route-page="@i"
+                           asp-route-name="@name"
+                           asp-route-location="@location"
+                           asp-route-sort="@sort">@i</a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    }
+
+</div>

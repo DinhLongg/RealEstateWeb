@@ -1,0 +1,69 @@
+﻿@model RealEstateWeb.Models.Property
+
+@{
+    ViewData["Title"] = Model?.Title ?? "Chi tiết bất động sản";
+}
+
+<div class="container my-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-transparent p-0 mb-3">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+            <li class="breadcrumb-item"><a asp-controller="Property" asp-action="Index">Real Estate</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.Title</li>
+        </ol>
+    </nav>
+
+    <div class="row g-4">
+        <div class="col-lg-7">
+            <div class="mb-3">
+                <img src="@Url.Content(Model.ImageUrl ?? "~/img/placeholder.png")" class="img-fluid rounded w-100" alt="@Model.Title" onerror="this.src='@Url.Content("~/img/placeholder.png")'" style="max-height:520px; object-fit:cover;" />
+            </div>
+
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Mô tả</h5>
+                    <p class="card-text">@Model.Description</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="card shadow-sm mb-3">
+                <div class="card-body">
+                    <h3 class="h5 mb-2">@Model.Title</h3>
+                    <p class="text-muted mb-1">@Model.Address</p>
+                    <p class="display-6 text-primary fw-bold mb-3">@Model.Price.ToString("N0")</p>
+
+                    <div class="d-grid gap-2 mb-2">
+                        <form asp-controller="Cart" asp-action="Add" method="post">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="propertyId" value="@Model.Id" />
+                            <button type="submit" class="btn btn-success btn-lg">Thêm vào giỏ</button>
+                        </form>
+
+                        <a class="btn btn-outline-secondary btn-lg" href="mailto:contact@example.com?subject=Yêu cầu thông tin về @Model.Title">Liên hệ ngay</a>
+                    </div>
+
+                    <hr />
+
+                    <h6>Thông tin</h6>
+                    <ul class="list-unstyled small">
+                        <li><strong>Mã:</strong> @Model.Id</li>
+                        <li><strong>Địa chỉ:</strong> @Model.Address</li>
+                        <li><strong>Giá:</strong> @Model.Price.ToString("N0")</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h6>Chia sẻ</h6>
+                    <div class="d-flex gap-2">
+                        <a class="btn btn-outline-primary btn-sm" href="#"><i class="fab fa-facebook-f"></i> Facebook</a>
+                        <a class="btn btn-outline-info btn-sm" href="#"><i class="fab fa-twitter"></i> Twitter</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
