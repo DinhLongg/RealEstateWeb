@@ -186,11 +186,15 @@ namespace RealEstateWeb.Controllers
         // POST: /Account/Logout
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Logout()
+        public async Task<IActionResult> Logout(string? returnUrl = null)
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            if (returnUrl != null)
+                return LocalRedirect(returnUrl);
+            else
+                return RedirectToAction("Index", "Home");
         }
+
 
         // GET: AccessDenied
         [HttpGet]

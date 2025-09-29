@@ -4,42 +4,95 @@
     ViewData["Title"] = "Sửa sản phẩm";
 }
 
-<h3>Sửa sản phẩm</h3>
-<form asp-action="Edit" method="post" enctype="multipart/form-data">
-    @Html.AntiForgeryToken()
-    <input type="hidden" asp-for="Id" />
-    <div class="row g-3">
-        <!-- same fields as Create -->
-        <div class="col-md-6">
-            <label class="form-label">Tiêu đề</label>
-            <input asp-for="Title" class="form-control" />
-            <span asp-validation-for="Title" class="text-danger"></span>
-        </div>
-        <div class="col-md-6">
-            <label class="form-label">Giá</label>
-            <input asp-for="Price" class="form-control" />
-            <span asp-validation-for="Price" class="text-danger"></span>
-        </div>
+<div class="container">
+    <div class="card shadow-sm p-4">
+        <h4 class="mb-3">Sửa sản phẩm</h4>
 
-        <div class="col-md-12">
-            <label class="form-label">Ảnh hiện tại</label>
-            <div>
-                <img src="@Url.Content(Model.ImageUrl ?? "~/img/placeholder.png")" style="max-width:220px;max-height:140px;object-fit:cover;border-radius:6px" />
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <form asp-area="Admin" asp-controller="Product" asp-action="Edit" method="post" enctype="multipart/form-data" class="row g-3">
+            @Html.AntiForgeryToken()
+            <input asp-for="Id" type="hidden" />
+
+            <div class="col-md-6">
+                <label class="form-label">Tiêu đề</label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger small"></span>
             </div>
-        </div>
 
-        <div class="col-md-6">
-            <label class="form-label">Thay ảnh (upload mới)</label>
-            <input type="file" name="ImageFile" class="form-control" />
-        </div>
+            <div class="col-md-6">
+                <label class="form-label">Loại</label>
+                <input asp-for="Type" class="form-control" />
+            </div>
 
-        <div class="col-12">
-            <button class="btn btn-primary">Lưu thay đổi</button>
-            <a asp-action="Index" class="btn btn-outline-secondary ms-2">Hủy</a>
-        </div>
+            <div class="col-md-4">
+                <label class="form-label">Giá</label>
+                <input asp-for="Price" type="number" step="0.01" class="form-control" />
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label">Kích thước (Size)</label>
+                <input asp-for="Size" type="number" class="form-control" />
+            </div>
+
+            <div class="col-md-2">
+                <label class="form-label">Bed</label>
+                <input asp-for="Bed" type="number" class="form-control" />
+            </div>
+
+            <div class="col-md-2">
+                <label class="form-label">Bath</label>
+                <input asp-for="Bath" type="number" class="form-control" />
+            </div>
+
+            <div class="col-12">
+                <label class="form-label">Địa chỉ</label>
+                <input asp-for="Address" class="form-control" />
+            </div>
+
+            <div class="col-12">
+                <label class="form-label">Mô tả</label>
+                <textarea asp-for="Description" rows="4" class="form-control"></textarea>
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label">Trạng thái</label>
+                <select asp-for="Status" class="form-select">
+                    <option value="For Sale" selected="@(Model.Status == "For Sale")">For Sale</option>
+                    <option value="For Rent" selected="@(Model.Status == "For Rent")">For Rent</option>
+                </select>
+            </div>
+
+            <div class="col-md-8">
+                <label class="form-label">Ảnh hiện tại</label>
+                <div class="d-flex align-items-center gap-3">
+                    <img id="imgPreview" src="@Url.Content(Model.ImageUrl ?? "~/img/placeholder.png")" style="max-width:220px;max-height:140px;object-fit:cover;border-radius:6px" />
+                </div>
+                <div class="mt-2">
+                    <label class="form-label small">Upload ảnh mới (tuỳ chọn)</label>
+                    <input name="ImageFile" type="file" accept="image/*" class="form-control" onchange="previewImage(this)" />
+                </div>
+            </div>
+
+            <div class="col-12 d-flex justify-content-end gap-2">
+                <a asp-area="Admin" asp-controller="Product" asp-action="Index" class="btn btn-outline-secondary">Hủy</a>
+                <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+            </div>
+        </form>
     </div>
-</form>
+</div>
 
 @section Scripts {
+    <script>
+        function previewImage(input) {
+            if (!input || !input.files || !input.files[0]) return;
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('imgPreview').src = e.target.result;
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    </script>
+
     <partial name="_ValidationScriptsPartial" />
 }
