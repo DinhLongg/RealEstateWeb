@@ -1,6 +1,146 @@
-﻿
+﻿@* Trang giới thiệu siêu đẹp *@
+@{
+    ViewData["Title"] = "Giới thiệu";
+    Layout = "_Layout"; // hoặc Layout bạn đang dùng cho trang public
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/about.css" asp-append-version="true" />
+}
 
-@* Trang giới thiệu *@
-<h1>Giới thiệu</h1>
-<p>Đây là trang giới thiệu công ty/website.</p>
+
+<!-- Hero section -->
+
+<section class="about-hero position-relative bg-light py-5">
+    <div class="container py-5">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <h1 class="display-4 fw-bold text-primary mb-3">Về Chúng Tôi</h1>
+                <p class="lead text-muted">
+                    Chúng tôi là nền tảng bất động sản hàng đầu, giúp bạn tìm kiếm, đăng và quản lý nhà đất dễ dàng, nhanh chóng.
+                </p>
+                <ul class="list-unstyled mt-4">
+                    <li class="mb-2"><i class="fa fa-check text-success me-2"></i>Đăng tin và quản lý bất động sản tiện lợi</li>
+                    <li class="mb-2"><i class="fa fa-check text-success me-2"></i>Đội ngũ tư vấn chuyên nghiệp</li>
+                    <li class="mb-2"><i class="fa fa-check text-success me-2"></i>Bảo mật thông tin và giao dịch</li>
+                </ul>
+                <a asp-controller="Home" asp-action="Index" class="btn btn-primary btn-lg mt-3">
+                    Khám phá ngay <i class="fa fa-arrow-right ms-2"></i>
+                </a>
+            </div>
+            <div class="col-lg-6">
+                <img src="~/img/family.jpg" class="img-fluid rounded-4 shadow" alt="Giới thiệu">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats section -->
+<section class="about-stats text-white py-5">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-6 col-md-3 mb-4">
+                <h2 class="display-5 fw-bold counter" data-target="10000">0</h2>
+                <p class="mb-0">Khách hàng hài lòng</p>
+            </div>
+            <div class="col-6 col-md-3 mb-4">
+                <h2 class="display-5 fw-bold counter" data-target="500">0</h2>
+                <p class="mb-0">Bất động sản đang bán</p>
+            </div>
+            <div class="col-6 col-md-3 mb-4">
+                <h2 class="display-5 fw-bold counter" data-target="300">0</h2>
+                <p class="mb-0">Đối tác tin cậy</p>
+            </div>
+            <div class="col-6 col-md-3 mb-4">
+                <h2 class="display-5 fw-bold counter" data-target="24">0</h2>
+                <p class="mb-0">Hỗ trợ khách hàng</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Team section -->
+<section class="about-team py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Đội Ngũ Của Chúng Tôi</h2>
+            <p class="text-muted">Những con người đứng sau sự thành công của chúng tôi</p>
+        </div>
+        <div class="container text-center" style="max-width:500px;">
+            <div class="team-card shadow-sm border-0 h-100">
+                <img src="~/img/long.jpg" class="card-img-top" alt="Team member">
+                <div class="card-body text-center">
+                    <h5 class="card-title mb-0">Nguyễn Đình Long</h5>
+                    <small class="text-muted">CEO / Founder</small>
+                </div>
+            </div>
+        </div>
+        <div class="row g-3" style="margin-top:15px">
+            <div class="col-md-4">
+                <div class="team-card shadow-sm border-0 h-100">
+                    <img src="~/img/mam_3.jpg" class="card-img-top" alt="Team member">
+                    <div class="card-body text-center">
+                        <h5 class="card-title mb-0">Nguyễn Đình Mắm</h5>
+                        <small class="text-muted">CMO</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="team-card shadow-sm border-0 h-100">
+                    <img src="~/img/mun.jpg" class="card-img-top" alt="Team member">
+                    <div class="card-body text-center">
+                        <h5 class="card-title mb-0">Nguyễn Đình Mun</h5>
+                        <small class="text-muted">CTO</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="team-card shadow-sm border-0 h-100">
+                    <img src="~/img/muoi.jpg" class="card-img-top" alt="Team member">
+                    <div class="card-body text-center">
+                        <h5 class="card-title mb-0">Nguyễn Đình Muối</h5>
+                        <small class="text-muted">CTO</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="about-cta py-5 bg-light">
+    <div class="container text-center">
+        <h3 class="fw-bold mb-3">Bạn muốn đăng tin hoặc mua bất động sản?</h3>
+        <p class="text-muted mb-4">Tham gia ngay hôm nay để trải nghiệm dịch vụ tuyệt vời.</p>
+        <a asp-controller="Account" asp-action="Register" class="btn btn-success btn-lg me-2">
+            Đăng ký ngay <i class="fa fa-user-plus ms-2"></i>
+        </a>
+        <a asp-controller="Property" asp-action="Index" class="btn btn-outline-primary btn-lg">
+            Xem sản phẩm <i class="fa fa-home ms-2"></i>
+        </a>
+    </div>
+</section>
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const counters = document.querySelectorAll('.counter');
+
+            counters.forEach(counter => {
+                const updateCount = () => {
+                    const target = +counter.getAttribute('data-target');
+                    const count = +counter.innerText.replace(/\D/g, '');
+                    const increment = target / 200; // tốc độ
+
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count + increment);
+                        setTimeout(updateCount, 15);
+                    } else {
+                        counter.innerText = target.toLocaleString() + (target > 24 ? '+' : '');
+                    }
+                };
+                updateCount();
+            });
+        });
+    </script>
+}
 

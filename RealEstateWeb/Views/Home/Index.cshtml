@@ -1,24 +1,96 @@
-﻿
-@* Trang chủ *@
-<div class="container-xxl py-5">
+﻿@model IEnumerable<RealEstateWeb.Models.Property>
+@using RealEstateWeb.Models
+@{
+    ViewData["Title"] = "Trang chủ";
+    Layout = "_Layout"; // hoặc tên layout của bạn
+    var saleCount = ViewBag.SaleCount ?? 0;
+    var rentCount = ViewBag.RentCount ?? 0;
+}
+
+<!-- HERO -->
+<section class="hero py-5 text-white" style="background: linear-gradient(135deg,#00b98e 0%, #7cdc7f 100%);margin-top:20px;border-radius:20px;">
     <div class="container">
-        <div class="row g-5 align-items-center">
-            <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
-                <div class="about-img position-relative overflow-hidden p-5 pe-0">
-                    <img class="img-fluid w-100" src="img/about.jpg">
+        <div class="row align-items-center">
+            <div class="col-lg-7 text-white">
+                <h1 class="display-5 fw-bold" style="color:white;">Dinh Long — Tìm nơi an cư lý tưởng</h1>
+                <p class="lead text-white-50">Hơn <strong>@( (int)saleCount + (int)rentCount )</strong> bất động sản. Kết nối nhanh — giao dịch an toàn.</p>
+
+                <div class="d-flex gap-2 mt-4">
+                    <a asp-controller="Property" asp-action="Index" class="btn btn-light btn-lg">Tất cả bất động sản</a>
+                    <a asp-controller="Property" asp-action="Sale" class="btn btn-outline-light btn-lg">For Sale (@saleCount)</a>
+                    <a asp-controller="Property" asp-action="Rent" class="btn btn-outline-light btn-lg">For Rent (@rentCount)</a>
                 </div>
             </div>
-            <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
-                <h1 class="mb-4">#1 Place To Find The Perfect Property</h1>
-                <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p>
-                <p><i class="fa fa-check text-primary me-3"></i>Tempor erat elitr rebum at clita</p>
-                <p><i class="fa fa-check text-primary me-3"></i>Aliqu diam amet diam et eos</p>
-                <p><i class="fa fa-check text-primary me-3"></i>Clita duo justo magna dolore erat amet</p>
-                <a class="btn btn-primary py-3 px-5 mt-3" href="">Read More</a>
+
+            <div class="col-lg-5 d-none d-lg-block">
+                <div class="rounded-4 overflow-hidden shadow-lg">
+                    <img src="~/img/cho_mun.jpg" class="img-fluid" alt="Hero image" style="min-height:280px;border-radius:12px; object-fit:cover;">
+                </div>
             </div>
         </div>
+
+        <!-- Search bar (redirects to Property/Index with query 'q') -->
+        <form method="get" asp-controller="Property" asp-action="Index" class="row g-2 mt-4">
+            <div class="col-md-6">
+                <input type="text" name="q" class="form-control form-control-lg" placeholder="Tìm theo tên bất động sản hoặc địa chỉ..." />
+            </div>
+            <div class="col-md-2">
+                <select name="sort" class="form-select form-select-lg">
+                    <option value="">Sắp xếp</option>
+                    <option value="price_asc">Giá: thấp → cao</option>
+                    <option value="price_desc">Giá: cao → thấp</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <select name="status" class="form-select form-select-lg">
+                    <option value="">Tất cả</option>
+                    <option value="For Sale">For Sale</option>
+                    <option value="For Rent">For Rent</option>
+                </select>
+            </div>
+            <div class="col-md-2 d-grid">
+                <button class="btn btn-dark btn-lg">Tìm</button>
+            </div>
+        </form>
     </div>
-</div>
+</section>
 
+<!-- FEATURED -->
+<section class="py-5">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h3 class="mb-0">Bất động sản nổi bật</h3>
+                <small class="text-muted">Những lựa chọn mới nhất</small>
+            </div>
+            <a asp-controller="Property" asp-action="Index" class="btn btn-outline-primary">Xem tất cả</a>
+        </div>
 
+        <div class="row g-4">
+            @if (!Model?.Any() ?? true)
+            {
+                <div class="col-12">
+                    <div class="alert alert-info">Hiện chưa có sản phẩm nổi bật.</div>
+                </div>
+            }
+            else
+            {
+                @foreach (var item in Model)
+                {
+                    <div class="col-sm-6 col-md-4">
+                        @Html.Partial("_PropertyCard", item)
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</section>
 
+<!-- CTA Footer -->
+<section class="py-5 bg-light">
+    <div class="container text-center">
+        <h4 class="fw-bold mb-3">Bạn muốn bán / cho thuê bất động sản?</h4>
+        <p class="text-muted mb-3">Liên hệ với chúng tôi để đăng tin, tư vấn định giá và hỗ trợ giao dịch.</p>
+        <a asp-controller="Home" asp-action="Contact" class="btn btn-primary btn-lg">Liên hệ ngay</a>
+    </div>
+</section>

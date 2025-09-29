@@ -1,15 +1,34 @@
-﻿using System.Diagnostics;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using RealEstateWeb.Data;
 using RealEstateWeb.Models;
+using System.Diagnostics;
 
 namespace RealEstateWeb.Controllers
 {
     public class HomeController : Controller
     {
         // Trang chủ
-        public IActionResult Index()
+        private readonly AppDbContext _context;
+
+        public HomeController(AppDbContext context) // DI AppDbContext
         {
-            return View();
+            _context = context;
+        }
+
+        // GET: /  (Trang chủ)
+        public async Task<IActionResult> Index()
+        {
+            var featured = await _context.Properties
+                .OrderByDescending(p => p.Id)
+                .Take(6)
+                .ToListAsync();
+
+            // Thống kê nhỏ (hiển thị số item Sale / Rent trên hero nếu muốn)
+            ViewBag.SaleCount = await _context.Properties.CountAsync(p => p.Status.ToLower() == "for sale");
+            ViewBag.RentCount = await _context.Properties.CountAsync(p => p.Status.ToLower() == "for rent");
+
+            return View(featured);
         }
 
         // Giới thiệu

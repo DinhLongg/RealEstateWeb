@@ -1,4 +1,4 @@
-/********** Template CSS **********/
+﻿/********** Template CSS **********/
 :root {
     --primary: #00B98E;
     --secondary: #FF6922;
@@ -438,3 +438,4 @@
     padding-right: 0;
     border-right: none;
 }
+
