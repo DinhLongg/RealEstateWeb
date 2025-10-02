@@ -1,6 +1,100 @@
 ﻿@{
-    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
-    ViewData["Title"] = "Bảng điều khiển";
+    ViewData["Title"] = "Dashboard";
+    
 }
-<h1>Bảng điều khiển</h1>
-<p>Chào mừng Admin đến trang quản trị.</p>
+@section Styles {
+    <link rel="stylesheet" href="~/css/dashboard.css" asp-append-version="true" />
+}
+
+<div class="container-fluid py-4">
+    <h2 class="fw-bold mb-4">Bảng điều khiển</h2>
+
+    <!-- Bộ lọc thời gian -->
+    <div class="d-flex mb-4">
+        <select class="form-select w-auto me-2" id="dateFilter">
+            <option value="1">Hôm qua</option>
+            <option value="7">7 ngày trước</option>
+            <option value="30">30 ngày trước</option>
+            <option value="custom">Tùy chọn</option>
+        </select>
+        <input type="date" id="customDate" class="form-control w-auto d-none" />
+        <button class="btn btn-primary ms-2" onclick="loadReport()">Xem</button>
+    </div>
+
+    <!-- Thống kê -->
+    <div class="row g-4">
+        <div class="col-md-3">
+            <div class="card text-center p-3 shadow-sm">
+                <h5 class="text-muted">Doanh số</h5>
+                <h2 class="fw-bold text-primary" id="revenue">0</h2>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center p-3 shadow-sm">
+                <h5 class="text-muted">Đơn hàng</h5>
+                <h2 class="fw-bold text-success" id="orders">0</h2>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center p-3 shadow-sm">
+                <h5 class="text-muted">Khách hàng mới</h5>
+                <h2 class="fw-bold text-warning" id="customers">0</h2>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center p-3 shadow-sm">
+                <h5 class="text-muted">Tỉ lệ hoàn thành KPI</h5>
+                <h2 class="fw-bold text-danger" id="kpi">0%</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Biểu đồ -->
+    <div class="row mt-5">
+        <div class="col-lg-8">
+            <div class="card p-3 shadow-sm">
+                <h5 class="mb-3">Doanh số theo ngày</h5>
+                <canvas id="revenueChart"></canvas>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card p-3 shadow-sm">
+                <h5 class="mb-3">KPI Nhân viên</h5>
+                <canvas id="kpiChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        function loadReport() {
+            // giả lập số liệu, sau này sẽ gọi API
+            document.getElementById("revenue").innerText = "120.000.000₫";
+            document.getElementById("orders").innerText = "56";
+            document.getElementById("customers").innerText = "12";
+            document.getElementById("kpi").innerText = "85%";
+
+            // Cập nhật chart
+            new Chart(document.getElementById("revenueChart"), {
+                type: "line",
+                data: {
+                    labels: ["T2","T3","T4","T5","T6","T7","CN"],
+                    datasets: [{ label: "Doanh số", data: [12, 19, 3, 5, 2, 3, 10], borderColor: "#0d6efd", fill: false }]
+                }
+            });
+
+            new Chart(document.getElementById("kpiChart"), {
+                type: "doughnut",
+                data: {
+                    labels: ["Hoàn thành", "Chưa đạt"],
+                    datasets: [{ data: [85, 15], backgroundColor: ["#198754", "#dc3545"] }]
+                }
+            });
+        }
+
+        // Load mặc định
+        loadReport();
+    </script>
+}

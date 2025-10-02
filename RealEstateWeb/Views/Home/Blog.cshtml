@@ -1,20 +1,34 @@
 ﻿@{
     ViewData["Title"] = "Blog";
 }
+@section Styles {
+    <link rel="stylesheet" href="~/css/blog.css" asp-append-version="true" />
+}
 
-<h1>Tin tức / Blog</h1>
-<p>Đây là trang blog, danh sách bài viết.</p>
+<section class="blog-hero py-5 text-center text-white">
+    <div class="container">
+        <h1 class="display-4 fw-bold">Tin tức & Bài viết</h1>
+        <p class="lead">Cập nhật thông tin thị trường bất động sản mới nhất</p>
+    </div>
+</section>
 
-<div class="row">
-    <div class="col-md-4">
-        <div class="card mb-3">
-            <img src="/images/blog1.jpg" class="card-img-top" alt="Blog 1">
-            <div class="card-body">
-                <h5 class="card-title">Bài blog 1</h5>
-                <p class="card-text">Tóm tắt ngắn…</p>
-                <a asp-controller="Home" asp-action="BlogDetail" asp-route-id="1" class="btn btn-primary">Đọc tiếp</a>
-            </div>
+<section class="blog-list py-5">
+    <div class="container">
+        <div class="row g-4">
+            @* Vòng lặp render list bài viết *@
+            @for (int i = 1; i <= 6; i++)
+            {
+                <div class="col-md-4">
+                    <div class="blog-card shadow-sm h-100">
+                        <img src="~/img/blog@(i).jpg" class="blog-img" alt="blog">
+                        <div class="p-3">
+                            <h5><a asp-controller="Blog" asp-action="Detail" asp-route-id="@i" class="stretched-link text-dark">Tiêu đề bài viết @i</a></h5>
+                            <p class="text-muted small">Ngày @(DateTime.Now.AddDays(-i).ToString("dd/MM/yyyy"))</p>
+                            <p class="text-muted">Tóm tắt ngắn gọn nội dung của bài viết…</p>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     </div>
-    @* thêm các bài blog khác tương tự *@
-</div>
+</section>

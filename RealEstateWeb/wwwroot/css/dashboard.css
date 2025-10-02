@@ -1,0 +1,36 @@
+﻿/* Dashboard */
+.container-fluid {
+    background: #f8f9fa;
+    min-height: 100vh;
+}
+
+/* Cards */
+.card {
+    border-radius: 12px;
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    .card h2 {
+        font-size: 2rem;
+        margin: 0;
+    }
+
+/* KPI Chart */
+#kpiChart {
+    max-height: 300px;
+}
+
+/* Revenue Chart */
+#revenueChart {
+    max-height: 400px;
+}
+
+/* Date Filter */
+#dateFilter, #customDate {
+    border-radius: 8px;
+}

@@ -1,8 +1,32 @@
 ﻿@{
-    ViewData["Title"] = "Chi tiết Blog";
+    ViewData["Title"] = "Chi tiết blog";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/blog.css" asp-append-version="true" />
 }
 
-<h1>Chi tiết bài viết</h1>
-<p>Mã bài: @ViewBag.Id</p>
-<p>Nội dung chi tiết của bài blog ở đây.</p>
-<a asp-controller="Home" asp-action="Blog" class="btn btn-secondary">Quay lại danh sách</a>
+<section class="blog-detail py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <article class="shadow-sm p-4 bg-white rounded">
+                    <img src="~/img/blog1.jpg" class="img-fluid rounded mb-3" alt="blog">
+                    <h2 class="fw-bold mb-3">Tiêu đề bài viết</h2>
+                    <p class="text-muted">Ngày đăng: 29/09/2025</p>
+                    <p>
+                        Nội dung chi tiết bài viết bất động sản. Bạn có thể viết dài nhiều đoạn, có hình ảnh chèn giữa…
+                    </p>
+                </article>
+            </div>
+            <div class="col-lg-4">
+                <aside>
+                    <h5 class="fw-bold mb-3">Bài viết liên quan</h5>
+                    <ul class="list-unstyled">
+                        <li><a asp-controller="Blog" asp-action="Detail" asp-route-id="2">Bài viết 2</a></li>
+                        <li><a asp-controller="Blog" asp-action="Detail" asp-route-id="3">Bài viết 3</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </div>
+    </div>
+</section>
